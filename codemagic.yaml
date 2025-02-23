@@ -6,7 +6,7 @@ workflows:
       vars:
         CORDOVA_PLATFORM: android
       node: latest
-      java: 11
+      java: 17  # <-- Use Java 17 as required by Android Gradle Plugin
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
