@@ -7,6 +7,7 @@ workflows:
         CORDOVA_PLATFORM: android
       node: latest
       java: 17  # ✅ Use Java 17 as required by Android Gradle Plugin
+
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
@@ -28,11 +29,15 @@ workflows:
           cordova plugin add cordova-plugin-background-mode
           cordova plugin add cordova-plugin-media
 
-      - name: Build APK
-        script: cordova build android --release
+      - name: Build APK and AAB
+        script: |
+          cordova build android --release
+          ls -la platforms/android/app/build/outputs/apk/release/
+          ls -la platforms/android/app/build/outputs/bundle/release/
 
     artifacts:
-      - platforms/android/app/build/outputs/**/*.apk
+      - platforms/android/app/build/outputs/apk/release/*.apk  # ✅ Collect APKs
+      - platforms/android/app/build/outputs/bundle/release/*.aab  # ✅ Collect AABs
 
     publishing:
       email:
