@@ -2,35 +2,34 @@ workflows:
   cordova-workflow:
     name: Cordova Android Build
     max_build_duration: 60
+
     environment:
+      java: 17  # Using Java 17 for Android Gradle compatibility
+      node: latest
       vars:
         CORDOVA_PLATFORM: android
         ANDROID_HOME: /usr/local/share/android-sdk
-      java: 17
-      node: latest
+        ANDROID_SDK_ROOT: /usr/local/share/android-sdk
 
     scripts:
       - name: Install Cordova CLI
-        script: |
-          npm install -g cordova
+        script: npm install -g cordova
 
       - name: Install dependencies
-        script: |
-          npm install
-
-      - name: Install Android Build Tools 34.0.0
-        script: |
-          yes | sdkmanager --licenses
-          sdkmanager "build-tools;34.0.0" "platforms;android-34"
+        script: npm install
 
       - name: Add Android platform
         script: |
-          cordova platform add android
+          if [ ! -d "platforms/android" ]; then
+            cordova platform add android
+          else
+            echo "Android platform already added."
+          fi
 
       - name: Build APK
         script: |
           export JAVA_HOME=$(/usr/libexec/java_home -v 17)
-          cordova build android --release --no-interactive --verbose
+          cordova build android --release --verbose
 
     artifacts:
       - platforms/android/app/build/outputs/**/*.apk
