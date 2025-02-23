@@ -28,6 +28,7 @@ workflows:
           cordova plugin add cordova-plugin-geolocation
           cordova plugin add cordova-plugin-background-mode
           cordova plugin add cordova-plugin-media
+          # 🚫 Removed cordova-plugin-whitelist (deprecated in Cordova Android 10+)
 
       - name: Build APK and AAB
         script: |
