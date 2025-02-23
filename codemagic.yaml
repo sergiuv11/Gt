@@ -6,7 +6,7 @@ workflows:
       vars:
         CORDOVA_PLATFORM: android
       node: latest
-      java: 11
+      java: 17  # Updated to Java 17
 
     scripts:
       - name: Install Cordova CLI
@@ -25,7 +25,9 @@ workflows:
         script: cordova platform add android
 
       - name: Build APK
-        script: cordova build android --release
+        script: |
+          export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+          cordova build android --release
 
     artifacts:
       - platforms/android/app/build/outputs/**/*.apk
