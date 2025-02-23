@@ -22,6 +22,13 @@ workflows:
       - name: Add Android platform
         script: cordova platform add android
 
+      - name: Install Required Cordova Plugins
+        script: |
+          cordova plugin add cordova-plugin-geolocation --save
+          cordova plugin add cordova-plugin-media --save
+          cordova plugin add cordova-plugin-permission --save
+          cordova plugin add cordova-plugin-android-permissions --save
+
       - name: Build APK and AAB
         script: |
           cordova build android --release
