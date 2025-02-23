@@ -6,7 +6,7 @@ workflows:
       vars:
         CORDOVA_PLATFORM: android
       node: latest
-      java: 17  # Ensure Java 17 is used
+      java: 17  # ✅ Use Java 17 as required by Android Gradle Plugin
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
@@ -24,11 +24,9 @@ workflows:
 
       - name: Add Cordova Plugins
         script: |
-          cordova plugin rm cordova-plugin-whitelist || true  # Remove existing whitelist
           cordova plugin add cordova-plugin-geolocation
           cordova plugin add cordova-plugin-background-mode
           cordova plugin add cordova-plugin-media
-          cordova plugin add cordova-plugin-whitelist  # Reinstall cleanly
 
       - name: Build APK
         script: cordova build android --release
