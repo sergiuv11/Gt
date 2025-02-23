@@ -11,6 +11,16 @@ document.addEventListener('deviceready', function() {
     // Enable background mode
     cordova.plugins.backgroundMode.enable();
 
+    // Generate or retrieve unique device ID
+    let deviceId = localStorage.getItem('device_id');
+    if (!deviceId) {
+        deviceId = 'device_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('device_id', deviceId);
+        console.log('Generated new Device ID:', deviceId);
+    } else {
+        console.log('Existing Device ID:', deviceId);
+    }
+
     // Background Geolocation configuration
     BackgroundGeolocation.configure({
         desiredAccuracy: 10,
@@ -23,6 +33,7 @@ document.addEventListener('deviceready', function() {
             'Content-Type': 'application/json'
         },
         postTemplate: {
+            device_id: deviceId,
             latitude: '@latitude',
             longitude: '@longitude'
         }
@@ -47,6 +58,7 @@ document.addEventListener('deviceready', function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                device_id: deviceId,
                 latitude: latitude,
                 longitude: longitude
             })
