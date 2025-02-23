@@ -7,7 +7,7 @@ workflows:
         CORDOVA_PLATFORM: android
       node: latest
       java: 11
-      ANDROID_SDK_ROOT: /opt/android-sdk-linux  # Path to Android SDK
+
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
@@ -17,8 +17,9 @@ workflows:
 
       - name: Install Android Build Tools 34.0.0
         script: |
-          yes | ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager --licenses
-          ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0" "platforms;android-34"
+          export ANDROID_SDK_ROOT=$ANDROID_HOME
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0" "platforms;android-34"
 
       - name: Add Android platform
         script: cordova platform add android
