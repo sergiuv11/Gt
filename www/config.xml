@@ -5,15 +5,25 @@
     <author email="you@example.com" href="http://example.com">Your Name</author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="*" />
     <preference name="Fullscreen" value="true" />
+
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="mdpi" src="res/icon/mdpi.png" />
+
+        <!-- Android Permissions -->
+        <edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/uses-permission">
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
+            <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+        </edit-config>
     </platform>
+
+    <!-- Cordova Plugins -->
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-background-mode" />
     <plugin name="cordova-plugin-whitelist" />
     <plugin name="cordova-plugin-media" />
     <plugin name="cordova-plugin-file" />
-    <allow-navigation href="*" />
 </widget>
