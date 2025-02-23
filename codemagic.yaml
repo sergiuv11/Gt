@@ -6,7 +6,7 @@ workflows:
       vars:
         CORDOVA_PLATFORM: android
       node: latest
-      java: 17  # Ensuring Java 17 is used as required by Gradle
+      java: 17
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
@@ -22,11 +22,14 @@ workflows:
       - name: Add Android platform
         script: cordova platform add android
 
-      - name: Build APK
-        script: cordova build android --release
+      - name: Build APK and AAB
+        script: |
+          cordova build android --release
+          ls -la platforms/android/app/build/outputs/bundle/release/
 
     artifacts:
       - platforms/android/app/build/outputs/**/*.apk
+      - platforms/android/app/build/outputs/**/*.aab  # <-- Include the AAB file
 
     publishing:
       email:
