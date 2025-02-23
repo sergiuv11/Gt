@@ -10,7 +10,7 @@ workflows:
     scripts:
       - name: Install Cordova CLI
         script: npm install -g cordova
-      
+
       - name: Install dependencies
         script: npm install
 
@@ -25,11 +25,12 @@ workflows:
       - name: Build APK and AAB
         script: |
           cordova build android --release
+          ls -la platforms/android/app/build/outputs/apk/release/
           ls -la platforms/android/app/build/outputs/bundle/release/
 
     artifacts:
-      - platforms/android/app/build/outputs/**/*.apk
-      - platforms/android/app/build/outputs/**/*.aab  # <-- Include the AAB file
+      - platforms/android/app/build/outputs/apk/release/*.apk  # <-- Collect APKs
+      - platforms/android/app/build/outputs/bundle/release/*.aab  # <-- Collect AABs
 
     publishing:
       email:
